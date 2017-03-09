@@ -1,10 +1,9 @@
 package com.apeplan.splayer;
 
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-
-import java.io.File;
+import android.view.View;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -14,30 +13,14 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
     }
 
-    private class ScanVideoTask extends AsyncTask<Void, File, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            return null;
-        }
-
-        public void eachVideo(File file) {
-            if (file != null && file.exists() && file.isDirectory()) {
-                File[] files = file.listFiles();
-                if (files != null && files.length != 0) {
-                    for (File f : files) {
-                        if (f.isDirectory()) {
-                            eachVideo(f);
-                        } else if (f.exists() && f.canRead()){
-
-                        }
-                    }
-                }
-            }
-        }
-
+    public void localPlay(View view) {
+        Intent intent = new Intent(this, LocalVideoPlayerActivity.class);
+        startActivity(intent);
     }
 
-
+    public void localPlay2(View view) {
+        Intent intent = new Intent(this, VideoViewDemo.class);
+        startActivity(intent);
+    }
 
 }
