@@ -28,13 +28,12 @@ import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
 
 public class LocalVideoPlayerActivity extends AppCompatActivity {
-    private String path = Environment.getExternalStorageDirectory() + "/oppo.mp4";
-    //    private String path = Environment.getExternalStorageDirectory() + "/rmvb.rmvb";
+    //    private String path = Environment.getExternalStorageDirectory() + "/oppo.mp4";
+    private String path = Environment.getExternalStorageDirectory() + "/我是艺术.mp4";
     private RelativeLayout mOperation_layout;
     private VideoView mVideoView;
     private ImageView mImv_volume_bg;
     private AudioManager mAudioManager;
-
 
     /**
      * 最大声音
@@ -90,7 +89,12 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
             return;
         } else {
             mVideoView.setVideoPath(path);
-            mVideoView.setMediaController(new MediaController(this));
+            mVideoView.setMediaController(new MediaController(this) {
+                @Override
+                public void doBack(View v) {
+                    finish();
+                }
+            });
             mVideoView.requestFocus();
 
             mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -109,7 +113,6 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
         }
         Log.d("Simon", "onCreate: playing= " + mVideoView.isPlaying());
         mGestureDetector = new GestureDetector(this, new MyGestureListener());
-
     }
 
     private void bindViews() {
@@ -149,6 +152,14 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
     }
 
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+        /**
+         * 用户按下触摸屏，并拖动，由1个MotionEvent ACTION_DOWN, 多个ACTION_MOVE触发
+         * @param e1
+         * @param e2
+         * @param distanceX
+         * @param distanceY
+         * @return
+         */
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             float oldX = e1.getX(), oldY = e1.getY();
@@ -169,6 +180,7 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
             return super.onScroll(e1, e2, distanceX, distanceY);
         }
 
+
         /* @Override
          public boolean onDoubleTap(MotionEvent e) {
              if (mLayout == VideoView.VIDEO_LAYOUT_ZOOM)
@@ -188,6 +200,77 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
             if (mVideoView != null)
                 mVideoView.setVideoLayout(mLayout, 0);
             return true;
+        }
+
+        /**
+         * 用户按下屏幕后松开（单击），由一个MotionEvent ACTION_UP 触发
+         *
+         * @param e
+         * @return
+         */
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return super.onSingleTapUp(e);
+        }
+
+        /**
+         * 用户长按触摸屏，由多个MotionEvent ACTION_DOWN触发
+         * @param e
+         */
+        @Override
+        public void onLongPress(MotionEvent e) {
+            super.onLongPress(e);
+        }
+
+        /**
+         * 用户按下屏幕、快速移动后松开，由一个MotionEvent ACTION_DOWN,多个ACTION_MOVE,一个ACTION_UP触发
+         *
+         * @param e1
+         * @param e2
+         * @param velocityX
+         * @param velocityY
+         * @return
+         */
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+
+        /**
+         * 用户轻触屏幕，尚未松开或者拖动，由一个MotionEvent ACTION_DOWN 触发
+         * 和onDown的区别是：没有松开或者拖动
+         *
+         * @param e
+         */
+        @Override
+        public void onShowPress(MotionEvent e) {
+            super.onShowPress(e);
+        }
+
+        /**
+         * 用户轻触屏幕，由一个MotionEvent ACTION_DOWN 触发
+         *
+         * @param e
+         * @return
+         */
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return super.onDown(e);
+        }
+
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent e) {
+            return super.onDoubleTapEvent(e);
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            return super.onSingleTapConfirmed(e);
+        }
+
+        @Override
+        public boolean onContextClick(MotionEvent e) {
+            return super.onContextClick(e);
         }
     }
 

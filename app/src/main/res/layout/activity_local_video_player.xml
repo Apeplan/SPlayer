@@ -19,7 +19,7 @@
         android:layout_gravity="center"
         android:background="@color/mediacontroller_bg"
         android:padding="10dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/imv_volume_bg"

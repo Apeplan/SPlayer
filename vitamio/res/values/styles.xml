@@ -9,11 +9,13 @@
         <item name="android:maxHeight">13dip</item>
         <item name="android:thumb">@drawable/scrubber_control_selector_holo</item>
         <item name="android:thumbOffset">16dip</item>
-        <item name="android:paddingLeft">16dip</item>
-        <item name="android:paddingRight">16dip</item>
+        <!--<item name="android:paddingLeft">16dip</item>-->
+        <!--<item name="android:paddingRight">16dip</item>-->
     </style>
 
     <style name="MediaController_Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>

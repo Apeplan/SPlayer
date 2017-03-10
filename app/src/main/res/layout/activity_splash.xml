@@ -12,14 +12,14 @@
         android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:onClick="localPlay"
-        android:text="播放本地视频"/>
+        android:text="我是艺术"/>
 
     <Button
         android:id="@+id/button2"
         android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:onClick="localPlay2"
-        android:text="播放本地视频"/>
+        android:text="夜空中最亮的星"/>
 
 
 </LinearLayout>

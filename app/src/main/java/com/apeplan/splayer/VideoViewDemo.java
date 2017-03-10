@@ -34,7 +34,8 @@ public class VideoViewDemo extends Activity {
      * path.
      */
 //    private String path = "";
-    private String path = Environment.getExternalStorageDirectory() + "/rmvb.rmvb";
+//    private String path = Environment.getExternalStorageDirectory() + "/rmvb.rmvb";
+    private String path = Environment.getExternalStorageDirectory() + "/夜空中最亮的星.mp4";
     private VideoView mVideoView;
 
     @Override

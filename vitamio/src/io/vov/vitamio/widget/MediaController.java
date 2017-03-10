@@ -123,6 +123,16 @@ public class MediaController extends FrameLayout {
             show(sDefaultTimeout);
         }
     };
+    private View.OnClickListener mBackListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            doBack(v);
+        }
+    };
+
+    public void doBack(View v) {
+
+    }
+
     private OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {
         public void onStartTrackingTouch(SeekBar bar) {
             mDragging = true;
@@ -164,6 +174,7 @@ public class MediaController extends FrameLayout {
             mHandler.sendEmptyMessageDelayed(SHOW_PROGRESS, 1000);
         }
     };
+    private ImageButton mBack;
 
     public MediaController(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -226,7 +237,8 @@ public class MediaController extends FrameLayout {
             mRoot = makeControllerView();
             mWindow.setContentView(mRoot);
             mWindow.setWidth(LayoutParams.MATCH_PARENT);
-            mWindow.setHeight(LayoutParams.WRAP_CONTENT);
+//            mWindow.setHeight(LayoutParams.WRAP_CONTENT);
+            mWindow.setHeight(LayoutParams.MATCH_PARENT);
         }
         initControllerView(mRoot);
     }
@@ -244,6 +256,13 @@ public class MediaController extends FrameLayout {
     }
 
     private void initControllerView(View v) {
+        mBack = (ImageButton) v.findViewById(getResources().getIdentifier("mediacontroller_back",
+                "id", mContext.getPackageName()));
+        if (mBack != null) {
+            mBack.requestFocus();
+            mBack.setOnClickListener(mBackListener);
+        }
+
         mPauseButton = (ImageButton) v.findViewById(getResources().getIdentifier
                 ("mediacontroller_play_pause", "id", mContext.getPackageName()));
         if (mPauseButton != null) {
@@ -337,6 +356,7 @@ public class MediaController extends FrameLayout {
      *                until hide() is called.
      */
     public void show(int timeout) {
+
         if (!mShowing && mAnchor != null && mAnchor.getWindowToken() != null) {
             if (mPauseButton != null)
                 mPauseButton.requestFocus();
@@ -375,7 +395,6 @@ public class MediaController extends FrameLayout {
     public void hide() {
         if (mAnchor == null)
             return;
-
         if (mShowing) {
             try {
                 mHandler.removeMessages(SHOW_PROGRESS);
