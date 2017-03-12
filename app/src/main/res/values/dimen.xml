@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="state_view_padding_t">10dp</dimen>
+    <dimen name="state_view_padding_l">4dp</dimen>
+    <dimen name="state_view_title_size">15sp</dimen>
+    <dimen name="state_view_subtitle_size">13sp</dimen>
+    <dimen name="state_view_btn_height">30dp</dimen>
+    <dimen name="state_view_drawable_size">70dp</dimen>
+</resources>

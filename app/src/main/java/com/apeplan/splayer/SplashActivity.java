@@ -1,9 +1,11 @@
 package com.apeplan.splayer;
 
-import android.content.Intent;
+ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+ import com.apeplan.splayer.ui.VideoListActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -19,7 +21,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void localPlay2(View view) {
-        Intent intent = new Intent(this, VideoViewDemo.class);
+//        Intent intent = new Intent(this, VideoViewDemo.class);
+        Intent intent = new Intent(this, VideoListActivity.class);
         startActivity(intent);
     }
 

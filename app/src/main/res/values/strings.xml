@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SPlayer</string>
+
+    <string name="state_empty">暂时没有数据</string>
+    <string name="state_retry">轻触屏幕重试</string>
+    <string name="state_error_msg">啊呜~网络不给力啊</string>
+    <string name="state_loading_message">正在加载...</string>
 </resources>

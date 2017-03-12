@@ -18,7 +18,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
+import com.apeplan.splayer.domain.MediaEntry;
 
 import java.lang.ref.WeakReference;
 
@@ -82,35 +83,32 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         mMaxVolume = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
         Log.d("Simon", "onCreate: 最大音量= " + mMaxVolume);
-        if (path == "") {
-            // Tell the user to provide a media file URL/path.
-            Toast.makeText(LocalVideoPlayerActivity.this, "Please edit VideoViewDemo Activity, " +
-                    "and set path variable to your media file URL/path", Toast.LENGTH_LONG).show();
-            return;
-        } else {
-            mVideoView.setVideoPath(path);
-            mVideoView.setMediaController(new MediaController(this) {
-                @Override
-                public void doBack(View v) {
-                    finish();
-                }
-            });
-            mVideoView.requestFocus();
 
-            mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    // optional need Vitamio 4.0
-                    mediaPlayer.setPlaybackSpeed(1.0f);
-                }
-            });
+        Bundle extras = getIntent().getExtras();
+        if (null != extras) {
+            MediaEntry video = (MediaEntry) extras.getSerializable("video");
+            String data = video.getData();
+            Log.d("Simon", "onCreate: data= " + data);
+            path = data;
         }
+
         mVideoView.setVideoPath(path);
-        boolean playing = mVideoView.isPlaying();
-        Log.d("Simon", "onCreate: playing= " + playing);
-        if (!playing) {
-            mVideoView.start();
-        }
+        mVideoView.setMediaController(new MediaController(this) {
+            @Override
+            public void doBack(View v) {
+                finish();
+            }
+        });
+        mVideoView.requestFocus();
+
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                // optional need Vitamio 4.0
+                mediaPlayer.setPlaybackSpeed(1.0f);
+            }
+        });
+
         Log.d("Simon", "onCreate: playing= " + mVideoView.isPlaying());
         mGestureDetector = new GestureDetector(this, new MyGestureListener());
     }
@@ -154,6 +152,7 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
     private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
         /**
          * 用户按下触摸屏，并拖动，由1个MotionEvent ACTION_DOWN, 多个ACTION_MOVE触发
+         *
          * @param e1
          * @param e2
          * @param distanceX
@@ -215,6 +214,7 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
 
         /**
          * 用户长按触摸屏，由多个MotionEvent ACTION_DOWN触发
+         *
          * @param e
          */
         @Override

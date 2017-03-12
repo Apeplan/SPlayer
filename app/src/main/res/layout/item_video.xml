@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dip" >
+
+    <ImageView
+        android:id="@+id/imv_video_icon"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="6dip"
+        android:src="@drawable/video_icon" />
+
+    <TextView
+        android:id="@+id/tv_video_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:layout_toRightOf="@id/imv_video_icon"
+        android:text="视频的名称 "
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_video_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_video_name"
+        android:layout_marginTop="5dip"
+        android:layout_toRightOf="@id/imv_video_icon"
+        android:text="视频的时间 "
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_video_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="5dip"
+        android:text="视频的大小 "
+        android:textSize="16sp" />
+
+    <View
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_alignParentBottom="true"
+        android:background="#88ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dip" />
+
+</RelativeLayout>

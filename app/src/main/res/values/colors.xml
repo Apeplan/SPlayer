@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="state_view_tv_1">#33475f</color>
+    <color name="state_view_tv_2">#727272</color>
 </resources>
