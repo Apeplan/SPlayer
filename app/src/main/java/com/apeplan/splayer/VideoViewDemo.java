@@ -20,12 +20,10 @@ package com.apeplan.splayer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Environment;
+import android.widget.MediaController;
 import android.widget.Toast;
+import android.widget.VideoView;
 
-import io.vov.vitamio.LibsChecker;
-import io.vov.vitamio.MediaPlayer;
-import io.vov.vitamio.widget.MediaController;
-import io.vov.vitamio.widget.VideoView;
 
 public class VideoViewDemo extends Activity {
 
@@ -41,8 +39,7 @@ public class VideoViewDemo extends Activity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        if (!LibsChecker.checkVitamioLibs(this))
-            return;
+
         setContentView(R.layout.videoview);
         mVideoView = (VideoView) findViewById(R.id.surface_view);
         if (path == "") {
@@ -54,14 +51,7 @@ public class VideoViewDemo extends Activity {
             mVideoView.setVideoPath(path);
             mVideoView.setMediaController(new MediaController(this));
             mVideoView.requestFocus();
-
-            mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
-                    // optional need Vitamio 4.0
-                    mediaPlayer.setPlaybackSpeed(1.0f);
-                }
-            });
+            mVideoView.start();
         }
 
     }

@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.Formatter;
 import android.view.View;
-import android.widget.Toast;
 
 import com.apeplan.splayer.LocalVideoPlayerActivity;
 import com.apeplan.splayer.R;
@@ -47,7 +46,7 @@ public class VideoListActivity extends BasicActivity {
 
     @Override
     protected StateView getLoadingView() {
-        return null;
+        return (StateView) findViewById(R.id.state_view);
     }
 
     private void goPlayer(MediaEntry mediaEntry) {
@@ -55,15 +54,15 @@ public class VideoListActivity extends BasicActivity {
         //传递列表使用bundle
         Bundle bundle = new Bundle();
         bundle.putSerializable("video", mediaEntry);
-       startIntent(LocalVideoPlayerActivity.class,bundle);
+        startIntent(LocalVideoPlayerActivity.class, bundle);
     }
 
-    class RequestVideo extends AsyncTask<Void,Integer,List<MediaEntry>>{
+    class RequestVideo extends AsyncTask<Void, Integer, List<MediaEntry>> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Toast.makeText(VideoListActivity.this, "开始读取视频文件", Toast.LENGTH_SHORT).show();
+            showLoading("");
         }
 
         @Override
@@ -74,8 +73,7 @@ public class VideoListActivity extends BasicActivity {
         @Override
         protected void onPostExecute(List<MediaEntry> mediaEntries) {
             super.onPostExecute(mediaEntries);
-            Toast.makeText(VideoListActivity.this, "读取结束： " + mediaEntries.size(), Toast.LENGTH_SHORT)
-                    .show();
+            showContent();
             final VideoListAdapter adapter = new VideoListAdapter(mediaEntries);
             adapter.setItemOnClickListener(new VideoListAdapter.ItemOnClickListener() {
                 @Override
@@ -106,13 +104,13 @@ public class VideoListActivity extends BasicActivity {
                 MediaStore.Video.Media.ARTIST,//艺术家
                 MediaStore.Video.Media.DATA//视频播放地址
         };
-        Cursor cursor = getContentResolver().query(uri, projection , null, null, null);
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         while (cursor != null && cursor.moveToNext()) {
             videoItem = new MediaEntry();
 
             String title = cursor.getString(0);
             videoItem.setTitle(title);//标题
-//            holder.mSize.setText(
+
             String duration = cursor.getString(1);
             String time = FormatHelper.stringForTime(Integer.valueOf(duration));
             videoItem.setDuration(time);//设置时长

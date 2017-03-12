@@ -22,14 +22,13 @@ public abstract class BasicActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(getLayoutId());
         if (isStatusBarTranslucent()) {
             setStatusBarTranslucent();
         }
         initView(savedInstanceState);
-        initEventAndData();
         mStateView = getLoadingView();
+        initEventAndData();
     }
     /**
      * 返回页面的布局资源ID

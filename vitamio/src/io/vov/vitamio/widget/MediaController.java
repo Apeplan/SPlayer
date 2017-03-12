@@ -123,15 +123,6 @@ public class MediaController extends FrameLayout {
             show(sDefaultTimeout);
         }
     };
-    private View.OnClickListener mBackListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            doBack(v);
-        }
-    };
-
-    public void doBack(View v) {
-
-    }
 
     private OnSeekBarChangeListener mSeekListener = new OnSeekBarChangeListener() {
         public void onStartTrackingTouch(SeekBar bar) {
@@ -174,7 +165,6 @@ public class MediaController extends FrameLayout {
             mHandler.sendEmptyMessageDelayed(SHOW_PROGRESS, 1000);
         }
     };
-    private ImageButton mBack;
 
     public MediaController(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -256,13 +246,6 @@ public class MediaController extends FrameLayout {
     }
 
     private void initControllerView(View v) {
-        mBack = (ImageButton) v.findViewById(getResources().getIdentifier("mediacontroller_back",
-                "id", mContext.getPackageName()));
-        if (mBack != null) {
-            mBack.requestFocus();
-            mBack.setOnClickListener(mBackListener);
-        }
-
         mPauseButton = (ImageButton) v.findViewById(getResources().getIdentifier
                 ("mediacontroller_play_pause", "id", mContext.getPackageName()));
         if (mPauseButton != null) {
@@ -508,6 +491,67 @@ public class MediaController extends FrameLayout {
         if (mProgress != null)
             mProgress.setEnabled(enabled);
         super.setEnabled(enabled);
+    }
+
+    /**
+     * 进度条变化停止
+     */
+    public void onFinishSeekBar() {
+        if (mProgress == null) return;
+        if (!mInstantSeeking)
+            mPlayer.seekTo((mDuration * mProgress.getProgress()) / 1000);
+        System.out.println("MediaController-" + (mDuration * mProgress.getProgress()) / 1000);
+        System.out.println("MediaController-" + mProgress.getProgress());
+        if (mInfoView != null) {
+            mInfoView.setText("");
+            mInfoView.setVisibility(View.GONE);
+        }
+        show(sDefaultTimeout);
+        mHandler.removeMessages(SHOW_PROGRESS);
+        mAM.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        mDragging = false;
+        mHandler.sendEmptyMessageDelayed(SHOW_PROGRESS, 1000);
+    }
+
+    /** 获取进度条进度
+     * @return
+     */
+    public int getProgress() {
+        if (mProgress != null)
+            return mProgress.getProgress();
+        return 0;
+    }
+
+    /**
+     * 进度条开始改变
+     */
+    public void onStartSeekBar() {
+        if (mAM == null) return;
+        mDragging = true;
+        show(3600000);
+        mHandler.removeMessages(SHOW_PROGRESS);
+        if (mInstantSeeking)
+            mAM.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        if (mInfoView != null) {
+            mInfoView.setText("");
+        }
+    }
+    /**改变进度条进度
+     * @param progress
+     * @return
+     */
+    public String setSeekBarChange(int progress) {
+        if (mProgress == null) return "";
+        mProgress.setProgress(progress);
+        long newposition = (mDuration * progress) / 1000;
+        String time = StringUtils.generateTime(newposition);
+        if (mInstantSeeking)
+            mPlayer.seekTo(newposition);
+        if (mInfoView != null)
+            mInfoView.setText(time);
+        if (mCurrentTime != null)
+            mCurrentTime.setText(time);
+        return time;
     }
 
     public interface OnShownListener {

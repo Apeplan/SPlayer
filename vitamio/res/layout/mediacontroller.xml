@@ -1,81 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="70dp"
+              android:layout_gravity="bottom"
+              android:background="@color/mediacontroller_bg"
+              android:gravity="center_vertical"
+              android:orientation="vertical">
+
+    <SeekBar
+        android:id="@+id/mediacontroller_seekbar"
+        style="@style/MediaController_SeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:max="1000"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/mediacontroller_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/mediacontroller_back"
+            android:id="@+id/mediacontroller_play_pause"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:background="@color/transparent"
-            android:src="@drawable/mediacontroller_back_button"/>
+            android:contentDescription="@string/mediacontroller_play_pause"
+            android:src="@drawable/mediacontroller_pause_button"/>
 
         <TextView
-            android:id="@+id/mediacontroller_file_name"
+            android:id="@+id/mediacontroller_time_current"
             style="@style/MediaController_Text"
             android:layout_marginLeft="5dp"
-            android:ellipsize="marquee"
-            android:singleLine="true"/>
+            android:text="00:00"/>
+
+        <TextView
+            style="@style/MediaController_Text"
+            android:layout_marginLeft="5dp"
+            android:text="/ "/>
+
+        <TextView
+            android:id="@+id/mediacontroller_time_total"
+            style="@style/MediaController_Text"
+            android:text="00:00"/>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_gravity="bottom"
-        android:background="@color/mediacontroller_bg"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <SeekBar
-            android:id="@+id/mediacontroller_seekbar"
-            style="@style/MediaController_SeekBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:max="1000"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/mediacontroller_play_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:background="@color/transparent"
-                android:contentDescription="@string/mediacontroller_play_pause"
-                android:src="@drawable/mediacontroller_pause_button"/>
-
-            <TextView
-                android:id="@+id/mediacontroller_time_current"
-                style="@style/MediaController_Text"
-                android:layout_marginLeft="5dp"
-                android:text="00:00"/>
-
-            <TextView
-                style="@style/MediaController_Text"
-                android:layout_marginLeft="5dp"
-                android:text="/ "/>
-
-            <TextView
-                android:id="@+id/mediacontroller_time_total"
-                style="@style/MediaController_Text"
-                android:text="00:00"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-</FrameLayout>
+</LinearLayout>
