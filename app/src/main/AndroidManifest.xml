@@ -76,8 +76,6 @@
             android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
             android:label="Media/VideoView">
         </activity>
-        <activity android:name=".frame.BasicActivity">
-        </activity>
         <activity android:name=".ui.VideoListActivity">
         </activity>
     </application>

@@ -5,4 +5,8 @@
     <string name="state_retry">轻触屏幕重试</string>
     <string name="state_error_msg">啊呜~网络不给力啊</string>
     <string name="state_loading_message">正在加载...</string>
+
+    <string name="content">\t\t\t\tVitamio是一款 Android 与 iOS 平台上的全能多媒体开发框架，全面支持硬件解码与 GPU
+        渲染。从2011年8月上线到2014年1月，Vitamio 凭借其简洁易用的 API 接口赢得了全球众多开发者的青睐，全球已经有超过3000
+        种应用在使用Vitamio，覆盖用户超过5亿。\n\t\t\t\tVitamio能够流畅播放720P甚至1080P高清MKV，FLV，MP4，MOV，TS，RMVB等常见格式的视频，还可以在Android 与 iOS 上跨平台支持 MMS, RTSP, RTMP, HLS(m3u8) 等常见的多种视频流媒体协议，包括点播与直播。</string>
 </resources>

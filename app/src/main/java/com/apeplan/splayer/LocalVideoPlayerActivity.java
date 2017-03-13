@@ -13,12 +13,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.apeplan.splayer.domain.MediaEntry;
 import com.apeplan.splayer.widget.CustomMediaController;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import io.vov.vitamio.LibsChecker;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.widget.MediaController;
 import io.vov.vitamio.widget.VideoView;
@@ -57,8 +61,10 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager
                 .LayoutParams.FLAG_FULLSCREEN);
+//        Vitamio.isInitialized(getApplicationContext());// 不能播放
+        if (!LibsChecker.checkVitamioLibs(this))
+            return;
         setContentView(R.layout.activity_local_video_player);
-
         bindViews();
 
         mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -85,8 +91,14 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
                 mediaPlayer.setPlaybackSpeed(1.0f);
             }
         });
-
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String str = sdf.format(new Date());
+        Message msg = Message.obtain();
+        msg.obj = str;
+        msg.what = TIME;
+        mDismissHandler.sendMessage(msg);
         registerBoradcastReceiver();
+        registerTimeReceiver();
     }
 
     private void bindViews() {
@@ -99,10 +111,33 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
         registerReceiver(batteryBroadcastReceiver, intentFilter);
 
     }
+
+    public void registerTimeReceiver() {
+        //注册时间广播监听
+        IntentFilter filter = new IntentFilter(Intent.ACTION_TIME_TICK);
+        registerReceiver(receiver, filter);
+
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_TIME_TICK.equals(action)) {
+                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                String str = sdf.format(new Date());
+                Message msg = Message.obtain();
+                msg.obj = str;
+                msg.what = TIME;
+                mDismissHandler.sendMessage(msg);
+            }
+        }
+    };
+
     private BroadcastReceiver batteryBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())){
+            if (Intent.ACTION_BATTERY_CHANGED.equals(intent.getAction())) {
                 //获取当前电量
                 int level = intent.getIntExtra("level", 0);
                 //电量的总刻度
@@ -110,9 +145,13 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
                 //把它转成百分比
                 //tv.setText("电池电量为"+((level*100)/scale)+"%");
                 Message msg = new Message();
-                msg.obj = (level*100)/scale+"";
+                msg.obj = (level * 100) / scale + "";
                 msg.what = BATTERY;
                 mDismissHandler.sendMessage(msg);
+            }
+
+            if (Intent.ACTION_TIME_CHANGED.equals(intent.getAction())) {
+                Toast.makeText(LocalVideoPlayerActivity.this, "时间变化", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -129,6 +168,11 @@ public class LocalVideoPlayerActivity extends AppCompatActivity {
         super.onDestroy();
         try {
             unregisterReceiver(batteryBroadcastReceiver);
+        } catch (IllegalArgumentException ex) {
+
+        }
+        try {
+            unregisterReceiver(receiver);
         } catch (IllegalArgumentException ex) {
 
         }

@@ -126,7 +126,6 @@ public class CustomMediaController extends MediaController {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        System.out.println("MYApp-MyMediaController-dispatchKeyEvent");
         return true;
     }
 
